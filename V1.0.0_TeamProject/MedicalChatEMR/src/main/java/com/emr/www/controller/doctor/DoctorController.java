@@ -42,32 +42,6 @@ public class DoctorController {
 
 	@GetMapping("/main")
 	public String showDoctorMainPage(Model model) {	    // 환자 정보 리스트를 저장할 리스트
-	    List<Map<String, Object>> patientList = new ArrayList<>();
-
-	    // SQL 쿼리: 환자 정보를 조회합니다.
-	    String sql = "SELECT no, name, securityNum, gender, address, phone, email, bloodType, height, weight, allergies, bloodPressure, temperature, smokingStatus FROM PatientRegistrations";
-
-	    // 데이터베이스 연결 및 쿼리 실행
-	    try (Connection conn = dataSource.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql);
-	         ResultSet rs = pstmt.executeQuery()) {
-
-	        // 결과셋에서 환자 정보를 가져와 리스트에 저장
-	        while (rs.next()) {
-	            Map<String, Object> patient = new HashMap<>();
-	            patient.put("no",rs.getInt("no"));
-	            patient.put("name", rs.getString("name"));
-	            patientList.add(patient);
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    System.out.println("Patient List: " + patientList);
-
-	    // JSP에서 사용할 모델에 환자 리스트를 추가
-	    model.addAttribute("patientList", patientList);
 
 	    // JSP 파일로 반환
 	    return "doctor/DoctorMain";// "WEB-INF/views/doctor/DoctorMain.jsp"를 의미
